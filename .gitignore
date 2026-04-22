@@ -1,0 +1,9 @@
+#vertull envirement
+.venv/
+pyenv/
+
+#video
+test3.mp4
+
+#yolo model
+yolo26n.pt
