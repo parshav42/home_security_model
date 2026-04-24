@@ -46,6 +46,5 @@ A simple AI-based home security system built using Python and OpenCV that detect
 ## Installation
 
 ```bash
-git clone https://github.com/YOUR-USERNAME/YOUR-REPO
-cd YOUR-REPO
+git clone https://github.com/parshav42/home_security_model
 pip install -r requirements.txt
