@@ -26,8 +26,8 @@ A simple AI-based home security system built using Python and OpenCV that detect
 
 > Add your screenshots here
 
-![Intruder detected](photos/image1.jpg)
-![Intruder detected](images/image2.jpg)
+![Intruder detected](photos/image1.jpeg)
+![Intruder detected](photos/image2.jpeg)
 
 
 ---
