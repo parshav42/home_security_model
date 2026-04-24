@@ -1,6 +1,6 @@
 import cv2 as cv
 import pygame
-import whatsapp
+import bot
 import time
 import os
 
@@ -30,7 +30,7 @@ class main:
 
             diff = cv.absdiff(frame, frame1)
             gray = cv.cvtColor(diff, cv.COLOR_BGR2GRAY)
-            _, thresh = cv.threshold(gray, 90, 255, cv.THRESH_BINARY)
+            _, thresh = cv.threshold(gray, 50, 255, cv.THRESH_BINARY)
 
             contours, _ = cv.findContours(thresh, cv.RETR_TREE, cv.CHAIN_APPROX_SIMPLE)
 
@@ -50,12 +50,12 @@ class main:
                         img_name = f"output/intruder_{int(current_time)}.jpg"
                         cv.imwrite(img_name, frame1)  # use latest frame
 
-                        whatsapp.send_alert()
-                        whatsapp.send_image(img_name)
+                        bot.send_alert()
+                        bot.send_image(img_name)
 
                         last_sent_time = current_time
 
-            cv.imshow("frame", frame1)
+            cv.imshow("Home Camera", frame1)
 
             if cv.waitKey(60) == 27:
                 break
