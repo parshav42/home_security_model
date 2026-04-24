@@ -2,9 +2,12 @@ import cv2 as cv
 import pygame
 import whatsapp
 import time
+import os
 
 pygame.mixer.init()
 pygame.mixer.music.load("alert.mp3")
+folder = "output"
+os.makedirs(folder, exist_ok=True)
 
 
 class main:
@@ -44,7 +47,7 @@ class main:
 
                     # send again only after cooldown
                     if current_time - last_sent_time > cooldown:
-                        img_name = f"intruder_{int(current_time)}.jpg"
+                        img_name = f"output/intruder_{int(current_time)}.jpg"
                         cv.imwrite(img_name, frame1)  # use latest frame
 
                         whatsapp.send_alert()
@@ -54,7 +57,7 @@ class main:
 
             cv.imshow("frame", frame1)
 
-            if cv.waitKey(10) == 27:
+            if cv.waitKey(60) == 27:
                 break
 
         cap.release()
