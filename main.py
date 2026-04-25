@@ -13,7 +13,7 @@ os.makedirs(folder, exist_ok=True)
 class main:
     def video_capture(self, video_path):
         last_sent_time = 0
-        cooldown = 15  # seconds between alerts
+        cooldown = 15
 
         cap = cv.VideoCapture(video_path)
 
@@ -45,7 +45,7 @@ class main:
 
                     current_time = time.time()
 
-                    # send again only after cooldown
+
                     if current_time - last_sent_time > cooldown:
                         img_name = f"output/intruder_{int(current_time)}.jpg"
                         cv.imwrite(img_name, frame1)  # use latest frame
