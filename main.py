@@ -6,14 +6,14 @@ import os
 
 pygame.mixer.init()
 pygame.mixer.music.load("alert.mp3")
-folder = "output"
-os.makedirs(folder, exist_ok=True)
+
+os.makedirs("output", exist_ok=True)
 
 
 class main:
     def video_capture(self, video_path):
         last_sent_time = 0
-        cooldown = 15
+        cooldown = 4
 
         cap = cv.VideoCapture(video_path)
 
@@ -32,32 +32,32 @@ class main:
             gray = cv.cvtColor(diff, cv.COLOR_BGR2GRAY)
             _, thresh = cv.threshold(gray, 50, 255, cv.THRESH_BINARY)
 
-            contours, _ = cv.findContours(thresh, cv.RETR_TREE, cv.CHAIN_APPROX_SIMPLE)
+            # contours, _ = cv.findContours(thresh, cv.RETR_TREE, cv.CHAIN_APPROX_SIMPLE)
 
-            for c in contours:
-                if cv.contourArea(c) > 1500:
-                    # draw bounding box
-                    x, y, w, h = cv.boundingRect(c)
-                    cv.rectangle(frame1, (x, y), (x+w, y+h), (0, 0, 255), 2)
+            # for c in contours:
+            #     if cv.contourArea(c) > 4000:
+            #         # draw bounding box
+            #         x, y, w, h = cv.boundingRect(c)
+            #         cv.rectangle(frame1, (x, y), (x+w, y+h), (0, 0, 255), 2)
+            #
+            #         # if not pygame.mixer.music.get_busy():
+            #         #     pygame.mixer.music.play()
+            #
+            #         current_time = time.time()
+            #
+            #
+            #         if current_time - last_sent_time > cooldown:
+            #             img_name = f"output/intruder_{int(current_time)}.jpg"
+            #             cv.imwrite(img_name, frame1)  # use latest frame
+            #
+            #             bot.send_alert()
+            #             bot.send_image(img_name)
+            #
+            #             last_sent_time = current_time
 
-                    if not pygame.mixer.music.get_busy():
-                        pygame.mixer.music.play()
+            cv.imshow("Home Camera", thresh)
 
-                    current_time = time.time()
-
-
-                    if current_time - last_sent_time > cooldown:
-                        img_name = f"output/intruder_{int(current_time)}.jpg"
-                        cv.imwrite(img_name, frame1)  # use latest frame
-
-                        bot.send_alert()
-                        bot.send_image(img_name)
-
-                        last_sent_time = current_time
-
-            cv.imshow("Home Camera", frame1)
-
-            if cv.waitKey(60) == 27:
+            if cv.waitKey(1) == 27:
                 break
 
         cap.release()
@@ -65,4 +65,6 @@ class main:
 
 
 obj = main()
-obj.video_capture("test3.mp4")
+obj.video_capture(1)
+
+
