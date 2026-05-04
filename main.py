@@ -3,12 +3,14 @@ import pygame
 import bot
 import time
 import os
+from ultralytics import YOLO as y
+
+model = y("yolov8n.pt")
 
 pygame.mixer.init()
 pygame.mixer.music.load("alert.mp3")
 
 os.makedirs("output", exist_ok=True)
-
 
 class main:
     def video_capture(self, video_path):
@@ -22,9 +24,20 @@ class main:
             return
 
         while True:
+
             ret, frame = cap.read()
             ret2, frame1 = cap.read()
+            result = model(frame)
+            for r in result:
+                boxes = r.boxes
 
+                for box in boxes:
+                    cls =int(box.cls[0])
+
+                    if cls == 0:
+                        x1,y1,x2,y2=map(int ,box.xyxy[0])
+                        cv.rectangle(frame, (x1,y1),(x2,y2), (0, 0, 255), 2)
+                        cv.putText(frame,"Person",(x1,y1-10),cv.FONT_HERSHEY_PLAIN,0.8,(0,255,0),2)
             if not ret or not ret2:
                 break
 
@@ -55,7 +68,7 @@ class main:
             #
             #             last_sent_time = current_time
 
-            cv.imshow("Home Camera", thresh)
+            cv.imshow("Home Camera", frame)
 
             if cv.waitKey(1) == 27:
                 break
